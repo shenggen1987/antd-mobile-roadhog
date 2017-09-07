@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Table, Pagination, Popconfirm, Button, Checkbox} from 'antd';
+import { Table, Pagination, Popconfirm, Button, Checkbox } from 'antd';
 import { routerRedux } from 'dva/router';
 import queryString from 'query-string';
 import styles from './Users.less';
@@ -85,7 +85,6 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
       <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
         <div className={styles.normal}>
           <div>
-            
             <Table
               columns={columns}
               dataSource={dataSource}
@@ -99,7 +98,7 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
                     <Checkbox > 白名单客户</Checkbox>
                     <Checkbox > 储备客户</Checkbox>
                   </div>
-                )
+                );
               }}
             />
             <Pagination
