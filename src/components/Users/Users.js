@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Table, Pagination, Popconfirm, Button } from 'antd';
+import { Table, Pagination, Popconfirm, Button, Checkbox} from 'antd';
 import { routerRedux } from 'dva/router';
 import queryString from 'query-string';
-import styles from './Users.css';
+import styles from './Users.less';
 import { PAGE_SIZE } from '../../constants';
 import UserModal from './UserModal';
 
@@ -38,23 +38,28 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
 
   const columns = [
     {
-      title: 'Name',
+      title: '编号',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: '名字',
       dataIndex: 'name',
       key: 'name',
       render: text => <a href="">{text}</a>,
     },
     {
-      title: 'Email',
+      title: '邮箱',
       dataIndex: 'email',
       key: 'email',
     },
     {
-      title: 'Website',
+      title: 'web站点',
       dataIndex: 'website',
       key: 'website',
     },
     {
-      title: 'Operation',
+      title: '操作',
       key: 'operation',
       render: (text, record) => (
         <span className={styles.operation}>
@@ -70,27 +75,42 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
   ];
 
   return (
-    <div className={styles.normal}>
-      <div>
-        <div className={styles.create}>
-          <UserModal record={{}} onOk={createHandler}>
-            <Button type="primary">Create User</Button>
-          </UserModal>
+    <div>
+      <div className={styles.create}>
+        <UserModal record={{}} onOk={createHandler}>
+          <Button type="primary">创建储备客户</Button>
+        </UserModal>
+        <Button type="primary">批量导入白名单</Button>
+      </div>
+      <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+        <div className={styles.normal}>
+          <div>
+            
+            <Table
+              columns={columns}
+              dataSource={dataSource}
+              loading={loading}
+              rowKey={record => record.id}
+              pagination={false}
+              bordered
+              title={() => {
+                return (
+                  <div>
+                    <Checkbox > 白名单客户</Checkbox>
+                    <Checkbox > 储备客户</Checkbox>
+                  </div>
+                )
+              }}
+            />
+            <Pagination
+              className="ant-table-pagination"
+              total={total}
+              current={current}
+              pageSize={PAGE_SIZE}
+              onChange={pageChangeHandler}
+            />
+          </div>
         </div>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          loading={loading}
-          rowKey={record => record.id}
-          pagination={false}
-        />
-        <Pagination
-          className="ant-table-pagination"
-          total={total}
-          current={current}
-          pageSize={PAGE_SIZE}
-          onChange={pageChangeHandler}
-        />
       </div>
     </div>
   );
