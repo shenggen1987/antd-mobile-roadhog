@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Switch, Route } from 'dva/router';
 import dynamic from 'dva/dynamic';
+import NotFound from './routes/NotFound';
 
 function RouterConfig({ history, app }) {
   const IndexPage = dynamic({
@@ -21,6 +22,7 @@ function RouterConfig({ history, app }) {
       <Switch>
         <Route exact path="/" component={IndexPage} />
         <Route exact path="/users" component={Users} />
+        <Route component={NotFound}/>
       </Switch>
     </Router>
   );
