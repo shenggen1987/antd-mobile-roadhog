@@ -22,7 +22,7 @@ function RouterConfig({ history, app }) {
       <Switch>
         <Route exact path="/" component={IndexPage} />
         <Route exact path="/users" component={Users} />
-        <Route component={NotFound}/>
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );
