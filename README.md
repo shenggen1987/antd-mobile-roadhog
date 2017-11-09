@@ -1,24 +1,23 @@
-# dva-example-user-dashboard
-
-详见[《12 步 30 分钟，完成用户管理的 CURD 应用 (react+dva+antd)》](https://github.com/sorrycc/blog/issues/18)。
+# roadhog   antd-mobile
 
 ---
 
 <p align="center">
-  <img src="http://images2017.cnblogs.com/blog/189537/201709/189537-20170907211512397-57694114.png" />
+  <img src="http://images2017.cnblogs.com/blog/189537/201711/189537-20171107173855919-1880112359.png" />
 </p>
 
 ## Getting Started
 Install dependencies.
 
 ```bash
-$ npm install
+$ yarn install
 ```
 
 Start server.
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 If success, app will be open in your default browser automatically.
+

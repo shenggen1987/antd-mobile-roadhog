@@ -1,6 +1,11 @@
 {
   "name": "dva-example-user-dashboard",
   "private": true,
+  "keywords": [
+    "antd-mobile",
+    "react",
+    "roadhog"
+  ],
   "scripts": {
     "start": "roadhog server",
     "build": "roadhog build",
