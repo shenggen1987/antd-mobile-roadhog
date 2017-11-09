@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 import * as usersService from '../services/users';
+import { PREFIX } from '../constants';
 
 export default {
   namespace: 'users',
@@ -14,14 +15,14 @@ export default {
     },
   },
   effects: {
-    *fetch({ payload: { page = 1 } }, { call, put }) {
-      const { data, headers } = yield call(usersService.fetch, { page });
+    *fetch({ payload: { page = 1 } }, { call, put, select }) {
+      const list = yield select(state => state.users.list);
+      const { data } = yield call(usersService.fetch, { page });
       yield put({
         type: 'save',
         payload: {
-          data,
-          total: parseInt(headers['x-total-count'], 10),
-          page: parseInt(page, 10),
+          data: list ? data.concat(list) : data,
+          page,
         },
       });
     },
@@ -46,7 +47,7 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, search }) => {
         const query = queryString.parse(search);
-        if (pathname === '/users') {
+        if (pathname === `/${PREFIX}/users`) {
           dispatch({ type: 'fetch', payload: query });
         }
       });

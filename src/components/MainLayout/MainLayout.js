@@ -1,52 +1,86 @@
+import { TabBar } from 'antd-mobile';
 import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
-import styles from './MainLayout.less';
+import IndexPage from '../../routes/IndexPage.js'
+import Users from '../Users/Users.js'
 
-function MainLayout({ children, location }) {
-  const { Header, Content, Footer, Sider } = Layout;
-  const SubMenu = Menu.SubMenu;
-  return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider
-        collapsible
-      >
-        <div className={styles.logo}>
-          <i className="iconfont icon-qjd-1" />
-          <div className={styles.title}>仟金顶运营支撑系统</div>
-        </div>
-        <Menu theme="dark" defaultSelectedKeys={[location.pathname]} defaultOpenKeys={['sub1']} mode="inline">
-          <SubMenu
-            key="sub1"
-            title={<span><Icon type="contacts" /><span>客户关系管理</span></span>}
+export default class MainLayout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTab: 'greenTab',
+      hidden: false,
+      fullScreen: true,
+    };
+  }
+
+  renderContent(pageText) {
+    return (
+      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+        <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
+        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
+          onClick={(e) => {
+            e.preventDefault();
+            this.setState({
+              hidden: !this.state.hidden,
+            });
+          }}
+        >
+          Click to show/hide tab-bar
+        </a>
+        <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }}
+          onClick={(e) => {
+            e.preventDefault();
+            this.setState({
+              fullScreen: !this.state.fullScreen,
+            });
+          }}
+        >
+          Click to switch fullscreen
+        </a>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { height: 800 }}>
+        <TabBar
+          unselectedTintColor="#949494"
+          tintColor="#33A3F4"
+          barTintColor="white"
+          hidden={this.state.hidden}
+        >
+          <TabBar.Item
+            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg' }}
+            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg' }}
+            title="我的代办"
+            key="my1"
+            selected={this.state.selectedTab === 'greenTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'greenTab',
+              });
+            }}
           >
-            <Menu.Item key="3">仪表盘</Menu.Item>
-            <Menu.Item key="/users">我的客户</Menu.Item>
-            <SubMenu
-              key="sub11"
-              title={<span>储备资源管理</span>}
-            >
-              <Menu.Item key="33">储备管理</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="5">联系人</Menu.Item>
-            <Menu.Item key="6">拜访日志</Menu.Item>
-            <Menu.Item key="7">问题反馈</Menu.Item>
-          </SubMenu>
-        </Menu>
-      </Sider>
-      <Layout>
-        <Header className={styles.header}>
-          <span className={styles.appTitle}>早上好，李盛根！欢迎来到仟金顶运营支撑系统</span>
-          <Icon type="poweroff" className={styles.poweroff} />
-        </Header>
-        <Content >
-          {children}
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          ©2017 杭州仟金顶信息技术有限公司
-        </Footer>
-      </Layout>
-    </Layout>
-  );
+            <Users />
+          </TabBar.Item>
+          <TabBar.Item
+            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
+            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+            title="我的"
+            key="my"
+            selected={this.state.selectedTab === 'yellowTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'yellowTab',
+              });
+            }}
+          >
+            <IndexPage />
+            {this.renderContent('My')}
+          </TabBar.Item>
+        </TabBar>
+      </div>
+    );
+  }
 }
-
-export default MainLayout;

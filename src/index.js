@@ -1,9 +1,8 @@
 import dva from 'dva';
 import createHistory from 'history/createBrowserHistory';
 import createLoading from 'dva-loading';
-import { message } from 'antd';
+import { Toast } from 'antd-mobile';
 import './index.css';
-import './global.less';
 
 const ERROR_MSG_DURATION = 3; // 3 秒
 
@@ -11,7 +10,7 @@ const ERROR_MSG_DURATION = 3; // 3 秒
 const app = dva({
   history: createHistory(),
   onError(e) {
-    message.error(e.message, ERROR_MSG_DURATION);
+    Toast.fail(e.message, ERROR_MSG_DURATION);
   },
 });
 

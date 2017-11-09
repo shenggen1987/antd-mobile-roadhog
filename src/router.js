@@ -1,11 +1,13 @@
 import React from 'react';
 import { Router, Switch, Route } from 'dva/router';
 import dynamic from 'dva/dynamic';
-import NotFound from './routes/NotFound';
+import { PREFIX } from './constants';
 
 function RouterConfig({ history, app }) {
   const IndexPage = dynamic({
     app,
+    models: () => [
+    ],
     component: () => import('./routes/IndexPage'),
   });
 
@@ -17,12 +19,25 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/Users'),
   });
 
+  const CRMs = dynamic({
+    app,
+    models: () => [
+    ],
+    component: () => {
+      return ({ match }) => (
+        <div>
+          <Route path={`${match.url}/users`} component={Users} />
+          <Route exact path={match.url} component={IndexPage} />
+        </div>
+      );
+    },
+  });
+
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={IndexPage} />
-        <Route exact path="/users" component={Users} />
-        <Route component={NotFound} />
+        <Route path={`/${PREFIX}`} component={CRMs} />
+        <Route component={IndexPage} />
       </Switch>
     </Router>
   );

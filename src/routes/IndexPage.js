@@ -1,24 +1,53 @@
+/* eslint-disable no-plusplus, global-require */
 import React from 'react';
 import { connect } from 'dva';
-import styles from './IndexPage.css';
-import MainLayout from '../components/MainLayout/MainLayout';
+import { DatePicker, List, Button, Icon, Tabs, WhiteSpace, Badge } from 'antd-mobile';
+import { createForm } from 'rc-form';
 
-function IndexPage({ location }) {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-        <div className={styles.welcome} />
-        <ul className={styles.list}>
-          <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-          <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-        </ul>
-      </div>
-    </MainLayout>
-  );
+function callback() {
 }
 
-IndexPage.propTypes = {
-};
+class MobileDemo extends React.Component {
+  render() {
+    const tabs = [
+      { title: 'First Tab' },
+      { title: 'Second Tab' },
+      { title: <Badge dot>Third Tab</Badge> },
+    ];
+    return (
+      <div>
+        <List renderHeader={() => '选择时间'}>
+          <DatePicker
+            mode="date"
+            {...this.props.form.getFieldProps('datetime')}
+          >
+            <List.Item arrow="horizontal">日期+时间</List.Item>
+          </DatePicker>
+        </List>
+        <Button loading style={{ margin: '16px 0', padding: '0 16px' }} type="primary">
+          按钮
+        </Button>
 
+        <Icon type="check" />
+        <div>
+          <Tabs tabs={tabs} onChange={callback}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+              Content of first tab
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+              Content of second tab
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+              Content of third tab
+            </div>
+          </Tabs>
+          <WhiteSpace />
+        </div>
+      </div>
+    );
+  }
+}
+
+const IndexPage = createForm()(MobileDemo);
 export default connect()(IndexPage);
+
