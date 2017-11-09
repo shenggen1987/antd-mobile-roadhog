@@ -5,8 +5,7 @@ export default {
   "entry": "src/index.js",
   "disableCSSModules": false,
   "cssModulesExclude": ["./src/global.less"],
-  "publicPath": "/crm/",
-  "outputPath": "./dist/crm",
+  "publicPath": "/antd-mobile-roadhog/",
   "hash": true,
   "theme": "./theme.config.js",
   "autoprefixer": {
