@@ -11,13 +11,13 @@
 Install dependencies.
 
 ```bash
-$ yarn install
+$ npm install
 ```
 
 Start server.
 
 ```bash
-$ yarn start
+$ npm start
 ```
 
 If success, app will be open in your default browser automatically.
