@@ -21,6 +21,13 @@ function Users({ dispatch, list: data, loading, total, page: current }) {
       },
     });
   }
+  function toDetail(id) {
+    const params = queryString.stringify({ id });
+    dispatch(routerRedux.push({
+      pathname: 'detail',
+      search: params,
+    }));
+  }
   if (!data) {
     return (
       <div>loading</div>
@@ -33,12 +40,7 @@ function Users({ dispatch, list: data, loading, total, page: current }) {
   const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
-        style={{
-          backgroundColor: '#F5F5F9',
-          height: 8,
-          borderTop: '1px solid #ECECED',
-          borderBottom: '1px solid #ECECED',
-        }}
+        className={styles.row}
       />
     );
   let index = data.length - 1;
@@ -48,19 +50,14 @@ function Users({ dispatch, list: data, loading, total, page: current }) {
       }
       const obj = data[index--];
       return (
-        <div key={rowID} style={{ padding: '0 15px' }}>
+        <div key={rowID} className={styles.rowitem}>
           <div
-            style={{
-              lineHeight: '50px',
-              color: '#888',
-              fontSize: 18,
-              borderBottom: '1px solid #F6F6F6',
-            }}
-          >{obj.author.loginname} {obj.create_at}</div>
-          <div style={{ display: '-webkit-box', display: 'flex', padding: '15px 0' }}>
-            <img style={{ height: '64px', marginRight: '15px' }} src={obj.author.avatar_url} alt="" />
-            <div style={{ lineHeight: 1 }}>
-              <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>{obj.title}</div>
+            className={styles.author}
+          >{obj.author.loginname} {obj.create_at.slice(0, 10)}</div>
+          <div className={styles.item}>
+            <img className={styles.img} src={obj.author.avatar_url} alt="" />
+            <div>
+              <div className={styles.title} onClick={toDetail.bind(null,obj.id)}>{obj.title}</div>
             </div>
           </div>
         </div>
@@ -70,8 +67,8 @@ function Users({ dispatch, list: data, loading, total, page: current }) {
   return (
     <ListView
       dataSource={dataSource}
-      renderHeader={() => <span>header</span>}
-      renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+      renderHeader={() => <span>主题列表</span>}
+      renderFooter={() => (<div className={styles.loading}>
         {loading ? 'Loading...' : 'Loaded'}
       </div>)}
       renderRow={row}

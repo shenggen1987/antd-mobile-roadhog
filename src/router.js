@@ -18,6 +18,13 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/Users'),
   });
+  const Detail = dynamic({
+    app,
+    models: () => [
+      import('./models/detail'),
+    ],
+    component: () => import('./routes/Detail'),
+  });
 
   const CRMs = dynamic({
     app,
@@ -27,6 +34,7 @@ function RouterConfig({ history, app }) {
       return ({ match }) => (
         <div>
           <Route path={`${match.url}/users`} component={Users} />
+          <Route pathname="detail" path={`${match.url}/detail`} component={Detail} />
           <Route exact path={match.url} component={IndexPage} />
         </div>
       );
